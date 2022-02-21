@@ -1,4 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -17,7 +16,23 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
+.env.development
+.env.staging
+.env
+
+.env.development
+.env.production
+.env.staging
+
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+dist/
+{
+    "recommendations": [
+        "rangav.vscode-thunder-client"
+    ]
+}
+.firebase
