@@ -1,13 +1,14 @@
 import React, { Suspense, useCallback } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
-import { PrivateTemplate } from "templates";
+import { PrivateTemplate, PublicTemplate } from "templates";
 import { Routers } from 'utils';
 import lazyWithRetry from "./lazyWithRetry";
 
 const AnimalPage = lazyWithRetry(() => import('pages/Animals'))
-
+const HumansPage = lazyWithRetry(() => import('pages/Humans'))
 const Routes = (isLoggedIn, { ...rest }) => {
   const location = useLocation()
+  const ConvertRouters = element => { return `/${element}` }
   const _renderPrivateTemplate = useCallback(() => {
     return (
       <PrivateTemplate>
@@ -22,18 +23,33 @@ const Routes = (isLoggedIn, { ...rest }) => {
         <Route
           {...rest}
           exact
-          path={Routers.ANIMALS.URL}
+          path={ConvertRouters(Routers.ANIMALS.URL)}
           render={props => {
             return <AnimalPage {...rest} {...props} />
           }}
         />
-
       </PrivateTemplate>
     )
-  }, [location.pathname])
+  }, [isLoggedIn, location.pathname])
+
+  const _renderPublicTemplate = useCallback(() => {
+    return (
+      <PublicTemplate>
+        <Route
+          {...rest}
+          exact
+          path={ConvertRouters(Routers.HUMAN.URL)}
+          render={props => {
+            return <HumansPage {...rest} {...props} />
+          }}
+        />
+      </PublicTemplate>
+    )
+  }, [isLoggedIn, location.pathname])
+
   const route = useCallback(() => {
     if (isLoggedIn !== null)
-      return isLoggedIn ? _renderPrivateTemplate() : console.log('con cac chua login')
+      return isLoggedIn ? _renderPrivateTemplate() : _renderPublicTemplate()
   }, [isLoggedIn, location.pathname])
   return (
     <Suspense fallback={<div>Loading...</div>}>

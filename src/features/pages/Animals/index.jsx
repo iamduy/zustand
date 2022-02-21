@@ -2,7 +2,6 @@ import { Image, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { EndPoint } from 'config/api';
 import { useRequest } from "hooks";
-import { BaseModal } from "atoms";
 const AnimalManage = () => {
   const { onGetExecute } = useRequest();
   const [animals, setAnimals] = useState([])
@@ -18,7 +17,6 @@ const AnimalManage = () => {
   useEffect(() => {
     getAnimals();
   }, [])
-  console.log('hi')
 
 
   const columns = [
@@ -57,7 +55,6 @@ const AnimalManage = () => {
         columns={columns}
         dataSource={animals}
       />
-      <BaseModal />
     </>
 
   )
