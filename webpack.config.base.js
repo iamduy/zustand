@@ -35,7 +35,8 @@ module.exports = {
       api: path.resolve(BASE_DIR, 'src/config/api'),
       routes: path.resolve(BASE_DIR, 'src/config/routes'),
       config: path.resolve(BASE_DIR, 'src/config'),
-      utils: path.resolve(BASE_DIR, 'src/utils')
+      utils: path.resolve(BASE_DIR, 'src/utils'),
+      zustands: path.resolve(BASE_DIR, 'src/zustands')
     },
     extensions: ['.js', '.jsx', '*']
   },

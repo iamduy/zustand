@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Bird"
+    },
+    {
+      "id": 2,
+      "name": "Fish"
+    },
+    {
+      "id": 3,
+      "name": "Penguin"
+    },
+    {
+      "id": 4,
+      "name": "Crocodie"
+    }
+  ]
+}

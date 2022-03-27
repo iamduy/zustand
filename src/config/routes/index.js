@@ -17,7 +17,7 @@ const Routes = (isLoggedIn, { ...rest }) => {
           exact
           path='/'
           render={props => {
-            return <AnimalPage {...rest} {...props} />
+            return <HumansPage {...rest} {...props} />
           }}
         />
         <Route
@@ -26,6 +26,14 @@ const Routes = (isLoggedIn, { ...rest }) => {
           path={ConvertRouters(Routers.ANIMALS.URL)}
           render={props => {
             return <AnimalPage {...rest} {...props} />
+          }}
+        />
+        <Route
+          {...rest}
+          exact
+          path={ConvertRouters(Routers.HUMAN.URL)}
+          render={props => {
+            return <HumansPage {...rest} {...props} />
           }}
         />
       </PrivateTemplate>
