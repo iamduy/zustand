@@ -6,6 +6,8 @@ import lazyWithRetry from "./lazyWithRetry";
 
 const AnimalPage = lazyWithRetry(() => import('pages/Animals'))
 const HumansPage = lazyWithRetry(() => import('pages/Humans'))
+const LoginPage = lazyWithRetry(() => import('pages/Login'))
+
 const Routes = (isLoggedIn, { ...rest }) => {
   const location = useLocation()
   const ConvertRouters = element => { return `/${element}` }
@@ -51,13 +53,21 @@ const Routes = (isLoggedIn, { ...rest }) => {
             return <HumansPage {...rest} {...props} />
           }}
         />
+        <Route
+          {...rest}
+          exact
+          path={ConvertRouters(Routers.LOGIN)}
+          render={props => {
+            return <LoginPage {...rest} {...props} />
+          }}
+        />
       </PublicTemplate>
     )
   }, [isLoggedIn, location.pathname])
 
   const route = useCallback(() => {
     if (isLoggedIn !== null)
-      return isLoggedIn ? _renderPrivateTemplate() : _renderPublicTemplate()
+      return !isLoggedIn ? _renderPrivateTemplate() : _renderPublicTemplate()
   }, [isLoggedIn, location.pathname])
   return (
     <Suspense fallback={<div>Loading...</div>}>

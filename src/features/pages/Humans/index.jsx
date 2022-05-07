@@ -10,9 +10,10 @@ const HumanManage = () => {
 
   const [value, setValue] = useState();
 
+
   const onCreate = () => {
     postPerson({
-      id: Math.floor(Math.random() * 100),
+      id: people.length + 1,
       name: value,
     });
   };
