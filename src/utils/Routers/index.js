@@ -1,12 +1,13 @@
 const Routers = {
-  LOGIN: 'login',
+  LOGIN: "login",
+  REGISTER: "register",
   ANIMALS: {
-    URL: 'animals',
-    NAME: 'Animals Manage'
+    URL: "animals",
+    NAME: "Animals Manage",
   },
   HUMAN: {
-    URL: 'human',
-    NAME: 'Humans Manage'
+    URL: "human",
+    NAME: "Humans Manage",
   },
-}
+};
 export default Routers;

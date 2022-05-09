@@ -15,6 +15,9 @@ export const Content = styled(Row)`
   min-height: 500px;
   background: #fff;
   border-radius: 2px;
+  .ant-image {
+    display: initial;
+  }
 `;
 export const Image = styled(BaseImage)`
   object-fit: cover;

@@ -1,7 +1,6 @@
 import { Col } from "antd";
 import { IMAGES } from "assets";
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {
   Container,
   Content,
@@ -11,15 +10,12 @@ import {
   Input,
   BaseForm,
   BaseButton,
-  BaseText,
-  WrapperLink,
 } from "./styled";
 import { validateModel } from "./validate";
-
-const LoginPage = () => {
+import { useHistory } from "react-router-dom";
+const RegisterPage = () => {
   const validate = validateModel();
   const router = useHistory();
-
   const handleSubmit = (values) => {
     console.log(values);
   };
@@ -33,11 +29,17 @@ const LoginPage = () => {
           <WrapperImage>
             <Image src={IMAGES.LOGO} width={120} height={120} />
           </WrapperImage>
-          <Title level={4}>Login</Title>
+          <Title level={4}>Register</Title>
 
           <BaseForm onFinish={handleSubmit}>
             <BaseForm.Item rules={validate.email} name="email">
-              <Input placeholder={"Email"} />
+              <Input placeholder={"E-mail"} />
+            </BaseForm.Item>
+            <BaseForm.Item rules={validate.username} name="username">
+              <Input placeholder={"username"} />
+            </BaseForm.Item>
+            <BaseForm.Item rules={validate.name} name="name">
+              <Input placeholder={"name"} />
             </BaseForm.Item>
             <BaseForm.Item rules={validate.password} name="password">
               <Input.Password
@@ -50,12 +52,12 @@ const LoginPage = () => {
               <BaseButton htmlType="submit" type="primary">
                 Submit
               </BaseButton>
-              <WrapperLink>
-                <BaseText>{"Don't have an account?"}</BaseText>
-                <BaseText $bold onClick={() => router.push("/register")}>
-                  Register here.
-                </BaseText>
-              </WrapperLink>
+              <BaseButton
+                style={{ marginTop: "5px" }}
+                onClick={() => router.push("/login")}
+              >
+                Back
+              </BaseButton>
             </BaseForm.Item>
           </BaseForm>
         </Col>
@@ -63,4 +65,4 @@ const LoginPage = () => {
     </Container>
   );
 };
-export default LoginPage;
+export default RegisterPage;
