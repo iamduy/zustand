@@ -2,6 +2,7 @@ import React, { Suspense, useCallback } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { PrivateTemplate, PublicTemplate } from "templates";
 import { Routers } from "utils";
+import { useToken } from "hooks";
 import lazyWithRetry from "./lazyWithRetry";
 
 const AnimalPage = lazyWithRetry(() => import("pages/Animals"));
@@ -9,7 +10,9 @@ const HumansPage = lazyWithRetry(() => import("pages/Humans"));
 const LoginPage = lazyWithRetry(() => import("pages/Login"));
 const RegisterPage = lazyWithRetry(() => import("pages/Register"));
 
-const Routes = (isLoggedIn, { ...rest }) => {
+const Routes = ({ ...rest }) => {
+
+  const { getToken } = useToken();
   const location = useLocation();
   const ConvertRouters = (element) => `/${element}`;
 
@@ -42,11 +45,19 @@ const Routes = (isLoggedIn, { ...rest }) => {
         />
       </PrivateTemplate>
     );
-  }, [isLoggedIn, location.pathname]);
+  }, [location.pathname]);
 
   const _renderPublicTemplate = useCallback(() => {
     return (
       <PublicTemplate>
+        <Route
+          {...rest}
+          exact
+          path="/"
+          render={(props) => {
+            return <LoginPage {...rest} {...props} />;
+          }}
+        />
         <Route
           {...rest}
           exact
@@ -65,12 +76,15 @@ const Routes = (isLoggedIn, { ...rest }) => {
         />
       </PublicTemplate>
     );
-  }, [isLoggedIn, location.pathname]);
+  }, [location.pathname]);
 
   const route = useCallback(() => {
-    if (isLoggedIn !== null)
-      return !isLoggedIn ? _renderPrivateTemplate() : _renderPublicTemplate();
-  }, [isLoggedIn, location.pathname]);
+    if ([undefined, null, ''].includes(getToken())) {
+      return _renderPublicTemplate();
+    }
+    return _renderPrivateTemplate();
+  }, [location.pathname]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>{route()}</Switch>

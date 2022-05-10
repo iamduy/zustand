@@ -2,6 +2,7 @@ import { Col } from "antd";
 import { IMAGES } from "assets";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useRequest, useToken } from "hooks";
 import {
   Container,
   Content,
@@ -15,13 +16,21 @@ import {
   WrapperLink,
 } from "./styled";
 import { validateModel } from "./validate";
+import { EndPoint } from "config/api";
+import { withEmpty } from "exp-value";
 
 const LoginPage = () => {
   const validate = validateModel();
   const router = useHistory();
+  const { onPostExecute } = useRequest();
+  const { setToken } = useToken();
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = async (values) => {
+    const response = await onPostExecute(EndPoint.LOGIN, values);
+    if (response) {
+      await setToken(withEmpty("token", response));
+      router.push("/human");
+    }
   };
   return (
     <Container>

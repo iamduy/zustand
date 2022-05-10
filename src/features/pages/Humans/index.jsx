@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Spaces } from "./styled";
 import { useStore } from "zustands";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useToken } from "hooks";
 const HumanManage = () => {
   const people = useStore((state) => state.people);
   const postPerson = useStore((state) => state.post);
@@ -10,12 +11,14 @@ const HumanManage = () => {
 
   const [value, setValue] = useState();
 
+  const { clearStorage } = useToken();
 
   const onCreate = () => {
     postPerson({
       id: people.length + 1,
       name: value,
     });
+    clearStorage();
   };
   const onRemove = (id) => {
     removePerson(id);
